@@ -111,6 +111,7 @@ fun HomeScreen(navController: NavController?) {
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
+            .fillMaxHeight()
     ) {
 
         Text(
@@ -140,6 +141,7 @@ fun HomeScreen(navController: NavController?) {
             ) {
             }
         }
+        Spacer(modifier = Modifier.height(20.dp))
 
         // Grid com dois produtos por linha
             LazyVerticalGrid(
@@ -148,7 +150,7 @@ fun HomeScreen(navController: NavController?) {
                 horizontalArrangement = Arrangement.Center,
                 //modifier = Modifier.fillMaxSize()
                 // modifier = Modifier.fillMaxWidth()
-                modifier = Modifier.heightIn(100.dp, 200.dp)
+                modifier = Modifier.heightIn(200.dp, 800.dp)
                     .background(color = Color.White)
                     .fillMaxWidth()
 
