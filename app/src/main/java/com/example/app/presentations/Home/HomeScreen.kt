@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
     import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,6 +28,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.platform.LocalContext
@@ -167,14 +169,16 @@ fun HomeScreen(navController: NavController?) {
 @Composable
 fun GridItemCard(modifier: Modifier = Modifier, item: GridItem, navController: NavController?) {
     Card(
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+        ),
         modifier = modifier
-            .width(160.dp)
+            .width(180.dp)
             .height(260.dp)
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(8.dp),
+                .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -211,19 +215,19 @@ fun GridItemCard(modifier: Modifier = Modifier, item: GridItem, navController: N
             Spacer(modifier = Modifier.height(8.dp))
             Row() {
                 Text(
-                    text = item.price.toString(),
+                    text = "R\$ ${item.price.toString()}",
                     style = TextStyle(
                         fontWeight = FontWeight.ExtraBold,
                         fontSize = 20.sp,
                         color = Dark
                     )
                 )
-                Spacer(modifier = Modifier.width(15.dp))
+                Spacer(modifier = Modifier.width(13.dp))
                 Text(
                     text = item.priceDesc.toString(),
                     style = TextStyle(
                         fontWeight = FontWeight.Light,
-                        fontSize = 19.sp,
+                        fontSize = 18.sp,
                         color = Orange
                     ),
                     textDecoration = TextDecoration.LineThrough
