@@ -206,7 +206,7 @@ fun GridItemCard(modifier: Modifier = Modifier, item: GridItem, navController: N
             Text(
                 text = item.name,
                 style = TextStyle(
-                    fontWeight = FontWeight.SemiBold,
+                    fontWeight = FontWeight.Normal,
                     fontSize = 14.sp
                 ),
                 modifier = Modifier.fillMaxWidth()
