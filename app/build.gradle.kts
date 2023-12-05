@@ -47,6 +47,13 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    configurations {
+        all {
+            resolutionStrategy {
+                force("androidx.annotation:annotation:1.7.0")
+            }
+        }
+    }
 }
 
 dependencies {
@@ -61,6 +68,14 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("androidx.wear.compose:compose-material:1.2.1")
+    implementation("io.coil-kt:coil-compose:2.5.0")
+    //Navigation
+    val navVersion = "2.5.3"
+    implementation("androidx.navigation:navigation-compose:$navVersion")
+    implementation("androidx.annotation:annotation-jvm:1.7.0")
+
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
