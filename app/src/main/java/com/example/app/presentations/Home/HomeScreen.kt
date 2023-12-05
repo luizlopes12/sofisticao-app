@@ -51,7 +51,7 @@ val productList = listOf(
     GridProductItem("Produto 8", R.drawable.product__image, BigDecimal(55.55), BigDecimal(75.50)),
 )
  */
-data class GridItem(val name: String, val image: String)
+data class GridItem(val name: String, val image: String, val price: BigDecimal, val priceDesc: BigDecimal)
 
 data class GridProductItem(val name: String, val image: String, val price: BigDecimal, val priceDesc: BigDecimal)
 @Composable
@@ -120,7 +120,7 @@ fun HomeScreen(navController: NavController?) {
 
                     GridItemCard(
                         modifier = Modifier.padding(8.dp),
-                        item = GridItem(name, image),
+                        item = GridItem(name, image, price, priceDesc),
                         navController = navController // Passa o NavController aqui se necessário
                     )
 
@@ -239,7 +239,7 @@ fun GridItemCard(modifier: Modifier = Modifier, item: GridItem, navController: N
     Card(
         modifier = modifier
             .width(160.dp)
-            .height(260.dp)
+            .height(320.dp)
     ) {
         Column(
             modifier = Modifier
@@ -269,6 +269,23 @@ fun GridItemCard(modifier: Modifier = Modifier, item: GridItem, navController: N
                     fontSize = 16.sp
                 ),
                 modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = item.price.toString(), // Adicione aqui o preço do produto
+                style = TextStyle(
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 14.sp,
+                    color = Color.Gray
+                )
+            )
+            Text(
+                text = item.priceDesc.toString(),
+                style = TextStyle(
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 14.sp,
+                    color = Color.Gray
+                )
             )
             Spacer(modifier = Modifier.height(8.dp))
             // Aqui você pode adicionar informações adicionais do produto, como preço, descrição, etc.
