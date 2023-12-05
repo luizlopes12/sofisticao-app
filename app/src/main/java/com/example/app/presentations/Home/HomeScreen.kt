@@ -51,21 +51,20 @@ val productList = listOf(
     GridProductItem("Produto 8", R.drawable.product__image, BigDecimal(55.55), BigDecimal(75.50)),
 )
  */
-data class GridItem(val name: String, val image: String, val price: BigDecimal, val priceDesc: BigDecimal)
+data class GridItem(val id: String, val name: String, val image: String, val price: BigDecimal, val priceDesc: BigDecimal)
 
-data class GridProductItem(val name: String, val image: String, val price: BigDecimal, val priceDesc: BigDecimal)
+data class GridProductItem(val id: String, val name: String, val image: String, val price: BigDecimal, val priceDesc: BigDecimal)
 @Composable
 fun HomeScreen(navController: NavController?) {
     var productList by remember { mutableStateOf<List<GridProductItem>>(emptyList()) }
 
-    /*
     LaunchedEffect(Unit) {
         val products = getProductsFromAPI()
         // Armazenar os produtos no estado do Compose
         productList = products
     }
 
-     */
+     /*
     val MOCK_PRODUCTS = listOf(
         GridProductItem(
             "Panolog Pomada Elanco",
@@ -106,6 +105,7 @@ fun HomeScreen(navController: NavController?) {
     )
 
     productList = MOCK_PRODUCTS
+      */
 
     Column(
         modifier = Modifier
@@ -156,6 +156,7 @@ fun HomeScreen(navController: NavController?) {
 
                 // Iterate through the product list
                 itemsIndexed(productList) { position, _ ->
+                    val id = productList[position].id
                     val image = productList[position].image
                     val name = productList[position].name
                     val price = productList[position].price
@@ -163,7 +164,7 @@ fun HomeScreen(navController: NavController?) {
 
                     GridItemCard(
                         modifier = Modifier.padding(8.dp),
-                        item = GridItem(name, image, price, priceDesc),
+                        item = GridItem(id, name, image, price, priceDesc),
                         navController = navController // Passa o NavController aqui se necessário
                     )
 
@@ -335,7 +336,7 @@ fun GridItemCard(modifier: Modifier = Modifier, item: GridItem, navController: N
             if (navController != null) {
                 Button(
                     onClick = {
-                        navController.navigate("detail/${item.name}")
+                        navController.navigate("product/${item.id}")
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {
