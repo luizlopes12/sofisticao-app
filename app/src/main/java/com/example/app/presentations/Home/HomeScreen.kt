@@ -58,11 +58,54 @@ data class GridProductItem(val name: String, val image: String, val price: BigDe
 fun HomeScreen(navController: NavController?) {
     var productList by remember { mutableStateOf<List<GridProductItem>>(emptyList()) }
 
+    /*
     LaunchedEffect(Unit) {
         val products = getProductsFromAPI()
         // Armazenar os produtos no estado do Compose
         productList = products
     }
+
+     */
+    val MOCK_PRODUCTS = listOf(
+        GridProductItem(
+            "Panolog Pomada Elanco",
+            "https://res.cloudinary.com/dxuqupapa/image/upload/v1701736192/Sofisticao_images/sqokblrckdshzyzmuvo3.jpg",
+            BigDecimal("98.5"),
+            BigDecimal("91.99"),
+        ),
+        GridProductItem(
+            "Antipulgas e Carrapatos Bravecto MSD para Cães",
+            "https://res.cloudinary.com/dxuqupapa/image/upload/v1701736192/Sofisticao_images/dnvykd0jzj7jfs0o9hlu.jpg",
+            BigDecimal("194.9"),
+            BigDecimal("187.99")
+        ),
+        GridProductItem(
+            "Moletom Cansei de Ser Gato Canguru Preto para Gatos",
+            "https://res.cloudinary.com/dxuqupapa/image/upload/v1701736193/Sofisticao_images/muaemcn6rgq6a1jleqqm.jpg",
+            BigDecimal("79.99"),
+            BigDecimal("74.9")
+        ),
+        GridProductItem(
+            "Cama Suspensa Amarela de Janela",
+            "https://res.cloudinary.com/dxuqupapa/image/upload/v1701736193/Sofisticao_images/nnuauvgxubwhdlewp6bf.jpg",
+            BigDecimal("299.99"),
+            BigDecimal("290.99")
+        ),
+        GridProductItem(
+            "Cabana Fábrica Pet",
+            "https://res.cloudinary.com/dxuqupapa/image/upload/v1701736192/Sofisticao_images/afr3dyhrmbjnuos00il9.jpg",
+            BigDecimal("329.99"),
+            BigDecimal("324.99")
+        ),
+        GridProductItem(
+            "Assento Tubline Transpet",
+            "https://res.cloudinary.com/dxuqupapa/image/upload/v1701736192/Sofisticao_images/hhlvlxm8cznyw0lnm5ft.jpg",
+            BigDecimal("269.99"),
+            BigDecimal("188.99")
+        )
+    )
+
+    productList = MOCK_PRODUCTS
 
     Column(
         modifier = Modifier
