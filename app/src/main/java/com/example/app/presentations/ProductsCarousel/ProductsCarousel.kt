@@ -1,6 +1,7 @@
 package com.example.app.presentations.ProductsCarousel
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.app.R
 
+@Composable
 fun ProductsCarousel(navController: NavController?) {
 LazyRow(
 modifier = Modifier
