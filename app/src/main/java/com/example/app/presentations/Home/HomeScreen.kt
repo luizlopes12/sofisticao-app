@@ -1,6 +1,7 @@
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -34,6 +35,7 @@ fun HomeScreen(navController: NavController?) {
         modifier = Modifier
             .fillMaxSize()
     ) {
+
         Text(
             text = "SHOP",
             textAlign = TextAlign.Center,
@@ -62,11 +64,13 @@ fun HomeScreen(navController: NavController?) {
             }
         }
 
+
+
         // Grid com dois itens por linha
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp),
+                .padding(top = 16.dp, bottom = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             items(
@@ -94,7 +98,9 @@ fun HomeScreen(navController: NavController?) {
             GridProductItem("Produto 8", R.drawable.product__image, BigDecimal(55.55), BigDecimal(75.50)),
         )
 
+
         // Grid com dois produtos por linha
+        /*
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             verticalArrangement = Arrangement.Center,
@@ -148,7 +154,58 @@ fun HomeScreen(navController: NavController?) {
                 }
             }
         }
+
+         */
+
+        val image = productList[0].image
+
+        Row(
+            modifier = Modifier.fillMaxWidth()
+
+        ) {
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(10.dp)
+            ) {
+                Image(
+                    painter = painterResource(id = image!!),
+                    contentDescription = null,
+                    alignment = Alignment.Center,
+                    contentScale = ContentScale.FillWidth,
+                    modifier = Modifier
+                        .width(200.dp)
+                        .height(100.dp)
+                )
+                Text(
+                    text = productList[0].name
+                )
+            }
+
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(10.dp)
+            ) {
+                Image(
+                    painter = painterResource(id = image!!),
+                    contentDescription = null,
+                    alignment = Alignment.Center,
+                    contentScale = ContentScale.FillWidth,
+                    modifier = Modifier
+                        .width(200.dp)
+                        .height(100.dp)
+                )
+                Text(
+                    text = productList[0].name
+                )
+            }
+        }
+
+
     }
+
+
 }
 
 
