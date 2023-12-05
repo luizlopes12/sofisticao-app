@@ -16,9 +16,9 @@ interface ProductService {
 
 // Objeto de configuração do Retrofit
 object RetrofitClient {
-    private const val BASE_URL = "http://192.168.1.66:8080" // Coloque sua URL base aqui
+    private const val BASE_URL = "http://192.168.1.66:8080"
 
-    // Cria uma instância do Retrofit
+    // instância do Retrofit
     val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
