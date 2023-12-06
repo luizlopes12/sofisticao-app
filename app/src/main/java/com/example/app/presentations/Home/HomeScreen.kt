@@ -1,3 +1,7 @@
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -46,6 +50,7 @@ import com.example.app.R
 
 @Composable
 fun HomeScreen(navController: NavController?) {
+    val context = LocalContext.current;
     var productList by remember { mutableStateOf<List<GridProductItem>>(emptyList()) }
 
     LaunchedEffect(Unit) {
@@ -116,7 +121,7 @@ fun HomeScreen(navController: NavController?) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
+                .padding(2.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -125,59 +130,37 @@ fun HomeScreen(navController: NavController?) {
                 contentDescription = "Descrição da imagem",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .aspectRatio(1.5f) // Ajusta a proporção da imagem
+                    .aspectRatio(1f) // Ajusta a proporção da imagem
                     .padding(horizontal = 32.dp, vertical = 8.dp) // Ajusta o padding horizontal da imagem
             )
             Text(
                 text = "Sobre nós",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 32.dp, bottom = 16.dp) // Ajusta o padding do texto "Sobre nós" e alinha à esquerda
+                    .padding(start = 32.dp, bottom = 8.dp, top = 8.dp), // Ajusta o padding do texto "Sobre nós" e alinha à esquerda
+                style = androidx.compose.ui.text.TextStyle(
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.SemiBold,
+                )
             )
             Text(
                 text = "Somos uma marca que preza pela individualidade do seu pet. Cuidamos do estilo e bem estar do seu amiguinho num life style simples e leve. Siga-nos nas redes sociais e acompanhe as novidades.",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 32.dp, vertical = 8.dp) // Ajusta o padding do texto de baixo
+                    .padding(horizontal = 32.dp, vertical = 8.dp), // Ajusta o padding do texto de baixo
+                style = androidx.compose.ui.text.TextStyle(
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Light,
+                )
             )
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 32.dp),
+                    .padding(horizontal = 32.dp)
+                    .background(Dark),
                 horizontalArrangement = Arrangement.Center
             ) {
-                Button(
-                    onClick = { /* Handle button click */ },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Dark,
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(60.dp)
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Text(
-                            text = "IR PARA O INSTAGRAM",
-                            textAlign = TextAlign.Center,
-                            fontWeight = FontWeight.Normal,
-                            style = androidx.compose.ui.text.TextStyle(
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.Light,
-                                color = Color.White
-                            )
-                        )
-                        Spacer(modifier = Modifier.width(10.dp))
-                        Image(
-                            painter = painterResource(id = R.drawable.ic__instagram),
-                            contentDescription = "Logo",
-                            modifier = Modifier
-                                .size(30.dp)
-                        )
-                    }
-                }
+                InstagramButton(context = context)
             }
         }
         /*
@@ -362,3 +345,53 @@ fun GridItemCard2(modifier: Modifier = Modifier, item: GridItem, navController: 
         }
     }
 }
+
+@Composable
+fun InstagramButton(context: Context) {
+    Button(
+        onClick = {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse("https://www.instagram.com/sofisticao_shop")
+
+            // Tenta abrir no navegador
+            try {
+                context.startActivity(intent)
+            } catch (e: ActivityNotFoundException) {
+                // Se falhar, exibe uma mensagem de erro ou lida com isso conforme necessário
+                // Pode adicionar um Toast ou log para informar que não há navegador disponível
+            }
+        },
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Dark,
+        ),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(60.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+        ) {
+            Text(
+                text = "IR PARA O INSTAGRAM",
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Normal,
+                style = androidx.compose.ui.text.TextStyle(
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Light,
+                    color = Color.White
+                ),
+                modifier = Modifier.weight(1f)
+
+            )
+            Spacer(modifier = Modifier.width(10.dp))
+            Image(
+                painter = painterResource(id = R.drawable.ic__instagram),
+                contentDescription = "Logo",
+                modifier = Modifier
+                    .size(30.dp)
+            )
+        }
+    }
+}
+
