@@ -1,9 +1,15 @@
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
     import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -32,13 +38,12 @@ import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.example.app.R
 
-data class GridItem(val id: String, val name: String, val image: String, val price: BigDecimal, val priceDesc: BigDecimal)
-
-data class GridProductItem(val id: String, val name: String, val image: String, val price: BigDecimal, val priceDesc: BigDecimal)
 @Composable
 fun HomeScreen(navController: NavController?) {
     var productList by remember { mutableStateOf<List<GridProductItem>>(emptyList()) }
@@ -49,49 +54,6 @@ fun HomeScreen(navController: NavController?) {
         productList = products
     }
 
-     /*
-    val MOCK_PRODUCTS = listOf(
-        GridProductItem(
-            "Panolog Pomada Elanco",
-            "https://res.cloudinary.com/dxuqupapa/image/upload/v1701736192/Sofisticao_images/sqokblrckdshzyzmuvo3.jpg",
-            BigDecimal("98.5"),
-            BigDecimal("91.99"),
-        ),
-        GridProductItem(
-            "Antipulgas e Carrapatos Bravecto MSD para Cães",
-            "https://res.cloudinary.com/dxuqupapa/image/upload/v1701736192/Sofisticao_images/dnvykd0jzj7jfs0o9hlu.jpg",
-            BigDecimal("194.9"),
-            BigDecimal("187.99")
-        ),
-        GridProductItem(
-            "Moletom Cansei de Ser Gato Canguru Preto para Gatos",
-            "https://res.cloudinary.com/dxuqupapa/image/upload/v1701736193/Sofisticao_images/muaemcn6rgq6a1jleqqm.jpg",
-            BigDecimal("79.99"),
-            BigDecimal("74.9")
-        ),
-        GridProductItem(
-            "Cama Suspensa Amarela de Janela",
-            "https://res.cloudinary.com/dxuqupapa/image/upload/v1701736193/Sofisticao_images/nnuauvgxubwhdlewp6bf.jpg",
-            BigDecimal("299.99"),
-            BigDecimal("290.99")
-        ),
-        GridProductItem(
-            "Cabana Fábrica Pet",
-            "https://res.cloudinary.com/dxuqupapa/image/upload/v1701736192/Sofisticao_images/afr3dyhrmbjnuos00il9.jpg",
-            BigDecimal("329.99"),
-            BigDecimal("324.99")
-        ),
-        GridProductItem(
-            "Assento Tubline Transpet",
-            "https://res.cloudinary.com/dxuqupapa/image/upload/v1701736192/Sofisticao_images/hhlvlxm8cznyw0lnm5ft.jpg",
-            BigDecimal("269.99"),
-            BigDecimal("188.99")
-        )
-    )
-
-    productList = MOCK_PRODUCTS
-      */
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -100,7 +62,7 @@ fun HomeScreen(navController: NavController?) {
     ) {
 
         Text(
-            text = "SHOP",
+            text = "BEST SELLERS",
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
             style = TextStyle(
@@ -128,35 +90,165 @@ fun HomeScreen(navController: NavController?) {
         }
         Spacer(modifier = Modifier.height(20.dp))
 
-        // Grid com dois produtos por linha
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                verticalArrangement = Arrangement.Center,
-                horizontalArrangement = Arrangement.Center,
+        LazyRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            itemsIndexed(productList) { position, _ ->
+                val id = productList[position].id
+                val image = productList[position].image
+                val name = productList[position].name
+                val price = productList[position].price
+                val priceDesc = productList[position].priceDesc
+
+                GridItemCard2(
+                    modifier = Modifier.padding(8.dp),
+                    item = GridItem(id, name, image, price, priceDesc),
+                    navController = navController
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.sofisticao_illustrative),
+                contentDescription = "Descrição da imagem",
                 modifier = Modifier
-                    .heightIn(200.dp, 800.dp)
-                    .background(color = Color.White)
                     .fillMaxWidth()
-
+                    .aspectRatio(1.5f) // Ajusta a proporção da imagem
+                    .padding(horizontal = 32.dp, vertical = 8.dp) // Ajusta o padding horizontal da imagem
+            )
+            Text(
+                text = "Sobre nós",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 32.dp, bottom = 16.dp) // Ajusta o padding do texto "Sobre nós" e alinha à esquerda
+            )
+            Text(
+                text = "Somos uma marca que preza pela individualidade do seu pet. Cuidamos do estilo e bem estar do seu amiguinho num life style simples e leve. Siga-nos nas redes sociais e acompanhe as novidades.",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 32.dp, vertical = 8.dp) // Ajusta o padding do texto de baixo
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 32.dp),
+                horizontalArrangement = Arrangement.Center
             ) {
-
-                // Iterate through the product list
-                itemsIndexed(productList) { position, _ ->
-                    val id = productList[position].id
-                    val image = productList[position].image
-                    val name = productList[position].name
-                    val price = productList[position].price
-                    val priceDesc = productList[position].priceDesc
-
-                    GridItemCard(
-                        modifier = Modifier.padding(8.dp),
-                        item = GridItem(id, name, image, price, priceDesc),
-                        navController = navController // Passa o NavController aqui se necessário
-                    )
-
-
+                Button(
+                    onClick = { /* Handle button click */ },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Dark,
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(60.dp)
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = "IR PARA O INSTAGRAM",
+                            textAlign = TextAlign.Center,
+                            fontWeight = FontWeight.Normal,
+                            style = androidx.compose.ui.text.TextStyle(
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Light,
+                                color = Color.White
+                            )
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Image(
+                            painter = painterResource(id = R.drawable.ic__instagram),
+                            contentDescription = "Logo",
+                            modifier = Modifier
+                                .size(30.dp)
+                        )
+                    }
                 }
             }
+        }
+        /*
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.sofisticao_illustrative),
+                contentDescription = "Descrição da imagem",
+                modifier = Modifier
+                    .size(300.dp)
+                    .padding(bottom = 16.dp)
+            )
+            Text(
+                text = "Sobre nós",
+                modifier = Modifier
+                .padding(bottom = 16.dp)
+            )
+            Text(
+                text = "Somos uma marca que preza pela individualidade do seu pet. Cuidamos do estilo e bem estar do seu amiguinho num life style simples e leve. Siga-nos nas redes sociais e acompanhe as novidades.",
+                modifier = Modifier
+                    .padding(bottom = 14.dp)
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Dark),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Button(
+                    onClick = { /* Handle button click */ },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Dark,
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(60.dp)
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = "IR PARA O INSTAGRAM",
+                            textAlign = TextAlign.Center,
+                            fontWeight = FontWeight.Normal,
+                            style = androidx.compose.ui.text.TextStyle(
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Light,
+                                color = Color.White
+                            )
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Image(
+                            painter = painterResource(id = R.drawable.ic__instagram),
+                            contentDescription = "Logo",
+                            modifier = Modifier
+                                .size(30.dp)
+                        )
+                    }
+                }
+            }
+        }
+         */
+
+
+
 
 
 
@@ -167,7 +259,7 @@ fun HomeScreen(navController: NavController?) {
 }
 
 @Composable
-fun GridItemCard(modifier: Modifier = Modifier, item: GridItem, navController: NavController?) {
+fun GridItemCard2(modifier: Modifier = Modifier, item: GridItem, navController: NavController?) {
     Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface,
@@ -234,6 +326,39 @@ fun GridItemCard(modifier: Modifier = Modifier, item: GridItem, navController: N
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
+            // Botão Adicionar à Sacola
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Dark),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Button(
+                    onClick = { /* Handle button click */ },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Dark,
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(80.dp)
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = "Ver opções",
+                            textAlign = TextAlign.Center,
+                            fontWeight = FontWeight.Normal,
+                            style = androidx.compose.ui.text.TextStyle(
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Light,
+                                color = Color.White
+                            )
+                        )
+                    }
+                }
+            }
         }
     }
 }
