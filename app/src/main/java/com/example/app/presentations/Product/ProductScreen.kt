@@ -114,12 +114,12 @@ fun ProductScreen(navController: NavController, productId: String) {
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            text = "Adicionar à Sacola",
+                            text = "ADICIONAR À SACOLA",
                             textAlign = TextAlign.Center,
                             fontWeight = FontWeight.Normal,
                             style = androidx.compose.ui.text.TextStyle(
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.Light,
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Medium,
                                 color = Color.White
                             )
                         )

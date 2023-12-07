@@ -7,11 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.grid.GridCells
-    import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -33,12 +29,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.app.ui.theme.Dark
 import com.example.app.ui.theme.Orange
-import java.math.BigDecimal
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.platform.LocalContext
@@ -173,81 +167,8 @@ fun HomeScreen(navController: NavController?) {
                 InstagramButton(context = context)
             }
         }
-        /*
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.sofisticao_illustrative),
-                contentDescription = "Descrição da imagem",
-                modifier = Modifier
-                    .size(300.dp)
-                    .padding(bottom = 16.dp)
-            )
-            Text(
-                text = "Sobre nós",
-                modifier = Modifier
-                .padding(bottom = 16.dp)
-            )
-            Text(
-                text = "Somos uma marca que preza pela individualidade do seu pet. Cuidamos do estilo e bem estar do seu amiguinho num life style simples e leve. Siga-nos nas redes sociais e acompanhe as novidades.",
-                modifier = Modifier
-                    .padding(bottom = 14.dp)
-            )
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Dark),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Button(
-                    onClick = { /* Handle button click */ },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Dark,
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(60.dp)
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Text(
-                            text = "IR PARA O INSTAGRAM",
-                            textAlign = TextAlign.Center,
-                            fontWeight = FontWeight.Normal,
-                            style = androidx.compose.ui.text.TextStyle(
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.Light,
-                                color = Color.White
-                            )
-                        )
-                        Spacer(modifier = Modifier.width(10.dp))
-                        Image(
-                            painter = painterResource(id = R.drawable.ic__instagram),
-                            contentDescription = "Logo",
-                            modifier = Modifier
-                                .size(30.dp)
-                        )
-                    }
-                }
-            }
-        }
-         */
-
-
-
-
-
-
 
     }
-
 
 }
 
@@ -269,7 +190,7 @@ fun GridItemCard2(modifier: Modifier = Modifier, item: GridItem, navController: 
         ) {
             Box(
                 modifier = Modifier.clickable {
-                    // Ação ao clicar na imagem
+
                     navController?.navigate("product/${item.id}")
                 }
             ) {
@@ -323,7 +244,7 @@ fun GridItemCard2(modifier: Modifier = Modifier, item: GridItem, navController: 
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
-            // Botão Adicionar à Sacola
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -371,8 +292,6 @@ fun InstagramButton(context: Context) {
             try {
                 context.startActivity(intent)
             } catch (e: ActivityNotFoundException) {
-                // Se falhar, exibe uma mensagem de erro ou lida com isso conforme necessário
-                // Pode adicionar um Toast ou log para informar que não há navegador disponível
             }
         },
         colors = ButtonDefaults.buttonColors(
@@ -392,7 +311,7 @@ fun InstagramButton(context: Context) {
                 fontWeight = FontWeight.Normal,
                 style = androidx.compose.ui.text.TextStyle(
                     fontSize = 18.sp,
-                    fontWeight = FontWeight.Light,
+                    fontWeight = FontWeight.Medium,
                     color = Color.White
                 ),
                 modifier = Modifier.weight(1f)
