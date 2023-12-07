@@ -59,6 +59,16 @@ fun HomeScreen(navController: NavController?) {
         productList = products
     }
 
+    Image(
+        painter = painterResource(id = R.drawable.sofisticao_home),
+        contentDescription = "Descrição da imagem",
+        modifier = Modifier
+            .fillMaxWidth(),
+        //.aspectRatio(1f) // Ajusta a proporção da imagem
+        //.padding(bottom = 300.dp),
+        contentScale = ContentScale.Crop
+    )
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -76,7 +86,7 @@ fun HomeScreen(navController: NavController?) {
                 color = Dark
             ),
             modifier = Modifier
-                .padding(top = 35.dp)
+                .padding(top = 700.dp)
                 .fillMaxWidth()
         )
         Row(
@@ -285,7 +295,9 @@ fun GridItemCard2(modifier: Modifier = Modifier, item: GridItem, navController: 
                         fontWeight = FontWeight.Normal,
                         fontSize = 14.sp
                     ),
-                    modifier = Modifier.fillMaxWidth().heightIn(min = 36.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = 36.dp)
                 )
                 Spacer(modifier = Modifier.height(4.dp))
             }
