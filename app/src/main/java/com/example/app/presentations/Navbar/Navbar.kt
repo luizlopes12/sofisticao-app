@@ -2,6 +2,7 @@
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -18,20 +19,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import androidx.navigation.NavController
 import com.example.app.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Navbar() {
+fun Navbar(navController: NavController) {
     TopAppBar(
         title = {
             // Logo
-            Image(
-                painter = painterResource(id = R.drawable.sofisticao_logo),
-                contentDescription = "Logo",
-                modifier = Modifier
-                    .size(120.dp)
-            )
+            Box(
+                modifier = Modifier.clickable {
+                    // Ação ao clicar na imagem
+                    navController?.navigate("home")
+                }
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.sofisticao_logo),
+                    contentDescription = "Logo",
+                    modifier = Modifier
+                        .size(120.dp)
+                )
+            }
         },
         actions = {
             // Icon on the right

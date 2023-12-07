@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
                 val navController: NavHostController = rememberNavController()
                 val context = LocalContext.current
                 val scrollState = rememberScrollState()
-                Navbar()
+                Navbar(navController = navController)
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
