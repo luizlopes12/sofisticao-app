@@ -290,18 +290,18 @@ fun GridItemCard2(modifier: Modifier = Modifier, item: GridItem, navController: 
                 Spacer(modifier = Modifier.height(4.dp))
             }
 
-            Row() {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = "R\$ ${item.price.toString()}",
                     style = TextStyle(
                         fontWeight = FontWeight.ExtraBold,
                         fontSize = 20.sp,
                         color = Dark
-                    )
+                    ),
+                    modifier = Modifier.weight(1f)
                 )
-                Spacer(modifier = Modifier.width(13.dp))
                 Text(
-                    text = item.priceDesc.toString(),
+                    text = "R\$ ${item.priceDesc.toString()}",
                     style = TextStyle(
                         fontWeight = FontWeight.Light,
                         fontSize = 18.sp,
