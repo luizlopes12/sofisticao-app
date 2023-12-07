@@ -1,6 +1,7 @@
     package com.example.app.navigation
 
     import HomeScreen
+    import ShopScreen
     import androidx.navigation.compose.composable
     import com.example.app.R
     import com.example.app.presentations.Product.Product
@@ -24,6 +25,7 @@
                 val productId = backStackEntry.arguments?.getString("id") ?: ""
                 ProductScreen(navController, productId)
             }
+            composable("shop") { ShopScreen(navController) }
             composable("home") { HomeScreen(navController) }
         }
     }

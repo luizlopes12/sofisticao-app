@@ -1,9 +1,15 @@
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.GridCells
-    import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -23,24 +29,22 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.app.ui.theme.Dark
 import com.example.app.ui.theme.Orange
-import java.math.BigDecimal
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.example.app.R
 
-data class GridItem(val id: String, val name: String, val image: String, val price: BigDecimal, val priceDesc: BigDecimal)
-
-data class GridProductItem(val id: String, val name: String, val image: String, val price: BigDecimal, val priceDesc: BigDecimal)
 @Composable
 fun HomeScreen(navController: NavController?) {
+    val context = LocalContext.current;
     var productList by remember { mutableStateOf<List<GridProductItem>>(emptyList()) }
 
     LaunchedEffect(Unit) {
@@ -49,48 +53,15 @@ fun HomeScreen(navController: NavController?) {
         productList = products
     }
 
-     /*
-    val MOCK_PRODUCTS = listOf(
-        GridProductItem(
-            "Panolog Pomada Elanco",
-            "https://res.cloudinary.com/dxuqupapa/image/upload/v1701736192/Sofisticao_images/sqokblrckdshzyzmuvo3.jpg",
-            BigDecimal("98.5"),
-            BigDecimal("91.99"),
-        ),
-        GridProductItem(
-            "Antipulgas e Carrapatos Bravecto MSD para Cães",
-            "https://res.cloudinary.com/dxuqupapa/image/upload/v1701736192/Sofisticao_images/dnvykd0jzj7jfs0o9hlu.jpg",
-            BigDecimal("194.9"),
-            BigDecimal("187.99")
-        ),
-        GridProductItem(
-            "Moletom Cansei de Ser Gato Canguru Preto para Gatos",
-            "https://res.cloudinary.com/dxuqupapa/image/upload/v1701736193/Sofisticao_images/muaemcn6rgq6a1jleqqm.jpg",
-            BigDecimal("79.99"),
-            BigDecimal("74.9")
-        ),
-        GridProductItem(
-            "Cama Suspensa Amarela de Janela",
-            "https://res.cloudinary.com/dxuqupapa/image/upload/v1701736193/Sofisticao_images/nnuauvgxubwhdlewp6bf.jpg",
-            BigDecimal("299.99"),
-            BigDecimal("290.99")
-        ),
-        GridProductItem(
-            "Cabana Fábrica Pet",
-            "https://res.cloudinary.com/dxuqupapa/image/upload/v1701736192/Sofisticao_images/afr3dyhrmbjnuos00il9.jpg",
-            BigDecimal("329.99"),
-            BigDecimal("324.99")
-        ),
-        GridProductItem(
-            "Assento Tubline Transpet",
-            "https://res.cloudinary.com/dxuqupapa/image/upload/v1701736192/Sofisticao_images/hhlvlxm8cznyw0lnm5ft.jpg",
-            BigDecimal("269.99"),
-            BigDecimal("188.99")
-        )
+    Image(
+        painter = painterResource(id = R.drawable.sofisticao_home),
+        contentDescription = "Descrição da imagem",
+        modifier = Modifier
+            .fillMaxWidth(),
+        //.aspectRatio(1f) // Ajusta a proporção da imagem
+        //.padding(bottom = 300.dp),
+        contentScale = ContentScale.Crop
     )
-
-    productList = MOCK_PRODUCTS
-      */
 
     Column(
         modifier = Modifier
@@ -100,7 +71,7 @@ fun HomeScreen(navController: NavController?) {
     ) {
 
         Text(
-            text = "SHOP",
+            text = "BEST SELLERS",
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
             style = TextStyle(
@@ -109,7 +80,7 @@ fun HomeScreen(navController: NavController?) {
                 color = Dark
             ),
             modifier = Modifier
-                .padding(top = 35.dp)
+                .padding(top = 700.dp)
                 .fillMaxWidth()
         )
         Row(
@@ -128,53 +99,88 @@ fun HomeScreen(navController: NavController?) {
         }
         Spacer(modifier = Modifier.height(20.dp))
 
-        // Grid com dois produtos por linha
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                verticalArrangement = Arrangement.Center,
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .heightIn(200.dp, 800.dp)
-                    .background(color = Color.White)
-                    .fillMaxWidth()
+        LazyRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            itemsIndexed(productList) { position, _ ->
+                val id = productList[position].id
+                val image = productList[position].image
+                val name = productList[position].name
+                val price = productList[position].price
+                val priceDesc = productList[position].priceDesc
 
-            ) {
-
-                // Iterate through the product list
-                itemsIndexed(productList) { position, _ ->
-                    val id = productList[position].id
-                    val image = productList[position].image
-                    val name = productList[position].name
-                    val price = productList[position].price
-                    val priceDesc = productList[position].priceDesc
-
-                    GridItemCard(
-                        modifier = Modifier.padding(8.dp),
-                        item = GridItem(id, name, image, price, priceDesc),
-                        navController = navController // Passa o NavController aqui se necessário
-                    )
-
-
-                }
+                GridItemCard2(
+                    modifier = Modifier.padding(8.dp),
+                    item = GridItem(id, name, image, price, priceDesc),
+                    navController = navController
+                )
             }
+        }
 
+        Spacer(modifier = Modifier.height(20.dp))
 
-
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(2.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.sofisticao_illustrative),
+                contentDescription = "Descrição da imagem",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f) // Ajusta a proporção da imagem
+                    .padding(horizontal = 32.dp, vertical = 8.dp) // Ajusta o padding horizontal da imagem
+            )
+            Text(
+                text = "Sobre nós",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 32.dp, bottom = 8.dp, top = 8.dp), // Ajusta o padding do texto "Sobre nós" e alinha à esquerda
+                style = androidx.compose.ui.text.TextStyle(
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.SemiBold,
+                )
+            )
+            Text(
+                text = "Somos uma marca que preza pela individualidade do seu pet. Cuidamos do estilo e bem estar do seu amiguinho num life style simples e leve. Siga-nos nas redes sociais e acompanhe as novidades.",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 32.dp, vertical = 8.dp), // Ajusta o padding do texto de baixo
+                style = androidx.compose.ui.text.TextStyle(
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Light,
+                )
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 32.dp)
+                    .background(Dark),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                InstagramButton(context = context)
+            }
+        }
 
     }
-
 
 }
 
 @Composable
-fun GridItemCard(modifier: Modifier = Modifier, item: GridItem, navController: NavController?) {
+fun GridItemCard2(modifier: Modifier = Modifier, item: GridItem, navController: NavController?) {
     Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface,
         ),
         modifier = modifier
             .width(180.dp)
-            .height(260.dp)
+            .height(300.dp)
     ) {
         Column(
             modifier = Modifier
@@ -184,7 +190,7 @@ fun GridItemCard(modifier: Modifier = Modifier, item: GridItem, navController: N
         ) {
             Box(
                 modifier = Modifier.clickable {
-                    // Ação ao clicar na imagem
+
                     navController?.navigate("product/${item.id}")
                 }
             ) {
@@ -203,28 +209,32 @@ fun GridItemCard(modifier: Modifier = Modifier, item: GridItem, navController: N
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = item.name,
-                style = TextStyle(
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 14.sp
-                ),
-                modifier = Modifier.fillMaxWidth()
-            )
+            Column {
+                Text(
+                    text = item.name,
+                    style = TextStyle(
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 14.sp
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = 36.dp)
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+            }
 
-            Spacer(modifier = Modifier.height(8.dp))
-            Row() {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = "R\$ ${item.price.toString()}",
                     style = TextStyle(
                         fontWeight = FontWeight.ExtraBold,
                         fontSize = 20.sp,
                         color = Dark
-                    )
+                    ),
+                    modifier = Modifier.weight(1f)
                 )
-                Spacer(modifier = Modifier.width(13.dp))
                 Text(
-                    text = item.priceDesc.toString(),
+                    text = "R\$ ${item.priceDesc.toString()}",
                     style = TextStyle(
                         fontWeight = FontWeight.Light,
                         fontSize = 18.sp,
@@ -234,6 +244,87 @@ fun GridItemCard(modifier: Modifier = Modifier, item: GridItem, navController: N
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Dark),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Button(
+                    onClick = {navController?.navigate("shop")},
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Dark,
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        // .height(80.dp)
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = "Ver mais",
+                            textAlign = TextAlign.Center,
+                            fontWeight = FontWeight.Normal,
+                            style = androidx.compose.ui.text.TextStyle(
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Light,
+                                color = Color.White
+                            )
+                        )
+                    }
+                }
+            }
         }
     }
 }
+
+@Composable
+fun InstagramButton(context: Context) {
+    Button(
+        onClick = {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse("https://www.instagram.com/sofisticao_shop")
+
+            // Tenta abrir no navegador
+            try {
+                context.startActivity(intent)
+            } catch (e: ActivityNotFoundException) {
+            }
+        },
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Dark,
+        ),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(60.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+        ) {
+            Text(
+                text = "IR PARA O INSTAGRAM",
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Normal,
+                style = androidx.compose.ui.text.TextStyle(
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = Color.White
+                ),
+                modifier = Modifier.weight(1f)
+
+            )
+            Spacer(modifier = Modifier.width(10.dp))
+            Image(
+                painter = painterResource(id = R.drawable.ic__instagram),
+                contentDescription = "Logo",
+                modifier = Modifier
+                    .size(30.dp)
+            )
+        }
+    }
+}
+
