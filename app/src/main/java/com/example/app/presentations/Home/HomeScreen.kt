@@ -319,7 +319,7 @@ fun GridItemCard2(modifier: Modifier = Modifier, item: GridItem, navController: 
                 horizontalArrangement = Arrangement.Center
             ) {
                 Button(
-                    onClick = { /* Handle button click */ },
+                    onClick = {navController?.navigate("shop")},
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Dark,
                     ),
