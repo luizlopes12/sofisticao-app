@@ -105,3 +105,25 @@ ___
 - Certifique-se de que as credenciais do mongoDB estão corretamente configuradas. Elas estão disponíveis no arquivo `custom.properties`.
 
 Ao seguir essas etapas, você deve ser capaz de executar tanto a aplicação mobile quanto a API em seu ambiente de desenvolvimento. Se encontrar problemas durante a execução, consulte a documentação do projeto ou entre em contato com a equipe de desenvolvimento para obter assistência.
+
+___
+
+## Ilustrações do projeto
+
+<div align="center">
+
+   ### Home
+
+   <img src="https://github.com/luizlopes12/sofisticao-app/assets/104948713/1d999b34-8f73-4eac-9611-e1dc34b5f4b0" height="800">
+
+
+   ### Shop
+
+   <img src="https://github.com/luizlopes12/sofisticao-app/assets/104948713/eb48492d-eda3-46fc-8d19-8ecf997c3021" height="800">
+
+   
+   ### Produto
+   
+   <img src="https://github.com/luizlopes12/sofisticao-app/assets/104948713/8e8eb347-9e7f-4fef-acd4-783710904678" height="800">
+</div>
+
