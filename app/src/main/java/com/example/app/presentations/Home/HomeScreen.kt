@@ -249,7 +249,7 @@ fun GridItemCard2(modifier: Modifier = Modifier, item: GridItem, navController: 
         ),
         modifier = modifier
             .width(180.dp)
-            .height(260.dp)
+            .height(300.dp)
     ) {
         Column(
             modifier = Modifier
@@ -278,16 +278,18 @@ fun GridItemCard2(modifier: Modifier = Modifier, item: GridItem, navController: 
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = item.name,
-                style = TextStyle(
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 14.sp
-                ),
-                modifier = Modifier.fillMaxWidth()
-            )
+            Column {
+                Text(
+                    text = item.name,
+                    style = TextStyle(
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 14.sp
+                    ),
+                    modifier = Modifier.fillMaxWidth().heightIn(min = 36.dp)
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+            }
 
-            Spacer(modifier = Modifier.height(8.dp))
             Row() {
                 Text(
                     text = "R\$ ${item.price.toString()}",
@@ -323,14 +325,14 @@ fun GridItemCard2(modifier: Modifier = Modifier, item: GridItem, navController: 
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(80.dp)
+                        // .height(80.dp)
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            text = "Ver opções",
+                            text = "Ver mais",
                             textAlign = TextAlign.Center,
                             fontWeight = FontWeight.Normal,
                             style = androidx.compose.ui.text.TextStyle(
